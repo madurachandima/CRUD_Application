@@ -3,10 +3,12 @@ package com.madura.Crud.Application.servicies;
 import com.madura.Crud.Application.entities.Item;
 import com.madura.Crud.Application.repos.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
@@ -38,5 +40,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Optional<Item> searchItemById(int id) {
         return itemRepository.findById(id);
+    }
+
+    @Override
+    public void updateItemQuantity(int quantity, int id) {
+        itemRepository.updateItemQuantity(quantity, id);
     }
 }
