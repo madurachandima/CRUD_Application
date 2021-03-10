@@ -48,6 +48,7 @@ public class ItemController {
 
     @RequestMapping("/update")
     public String updateItem(@RequestBody Item collection) {
+        System.out.println(" To String :" + collection.toString());
         service.updateItem(collection);
         return "redirect:/items";
     }
@@ -55,7 +56,6 @@ public class ItemController {
     @PostMapping("/loadSingleItem")
     @ResponseBody
     public Item loadOneItem(@RequestBody Item item) {
-        System.out.println(item.getId());
         Item ItemCollection = service.searchItemById(item.getId()).get();
         return ItemCollection;
     }

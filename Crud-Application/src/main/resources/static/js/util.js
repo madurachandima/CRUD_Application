@@ -55,6 +55,7 @@ function saveItem() {
     let item_price = $("#itemPriceSave").val();
 
     let data = JSON.stringify({
+        id: item_id,
         itemName: item_name,
         itemQuantity: item_qty,
         itemPrice: item_price
@@ -68,7 +69,7 @@ function saveItem() {
         saveOrUpdateUrl = "update";
     }
 
-    if (saveOrUpdateUrl === "") {
+    if (saveOrUpdateUrl !== "") {
         xhttp.open("POST", "http://localhost:8080/grocery/" + saveOrUpdateUrl, true);
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.send(data);

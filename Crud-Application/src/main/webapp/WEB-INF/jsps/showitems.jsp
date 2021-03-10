@@ -55,7 +55,7 @@
 
                     <tr>
                         <td>
-                            <input type="text" class="no-border form-control shadow-none" id="itemName"
+                            <input type="text" class="no-border form-control shadow-none" readonly id="itemName"
                                    value=" ${GroceryItems.itemName}"/>
                         </td>
                         <td>
