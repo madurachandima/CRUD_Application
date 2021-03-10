@@ -16,7 +16,11 @@ public interface ItemService {
 
     Optional<Item> searchItemById(int id);
 
-    //update Item;
+    //update Item Quantity;
     @Transactional
-    void updateItemQuantity(int quantity , int  id);
+    void updateItemQuantity(int quantity, int id);
+
+    //update Item
+    @Transactional
+    void updateItem(Item item);
 }

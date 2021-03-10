@@ -93,7 +93,6 @@
                                 Edit
                             </button>
                         </td>
-
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -108,7 +107,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Add new Grocery Items/Edit Grocery Items</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add new Grocery Items</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -121,6 +120,8 @@
                                             <label for="itemName">Item Name : </label>
                                         </div>
                                         <div class="col-md-6">
+                                            <input type="hidden" id="itemIdSave" value="">
+
                                             <input type="text" class="form-control-plaintext" id="itemNameSave"
                                                    name="itemName" required="Item name is empty">
                                         </div>

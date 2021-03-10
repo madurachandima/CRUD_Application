@@ -8,9 +8,7 @@ import com.madura.Crud.Application.servicies.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,5 +44,19 @@ public class ItemController {
     public String deleteItem(@RequestBody ItemCollection collection) {
         service.deleteItem(collection.getId());
         return "redirect:/items";
+    }
+
+    @RequestMapping("/update")
+    public String updateItem(@RequestBody Item collection) {
+        service.updateItem(collection);
+        return "redirect:/items";
+    }
+
+    @PostMapping("/loadSingleItem")
+    @ResponseBody
+    public Item loadOneItem(@RequestBody Item item) {
+        System.out.println(item.getId());
+        Item ItemCollection = service.searchItemById(item.getId()).get();
+        return ItemCollection;
     }
 }
