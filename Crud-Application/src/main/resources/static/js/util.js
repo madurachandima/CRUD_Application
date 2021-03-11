@@ -1,5 +1,4 @@
 function callApi(btn_id) {
-
     $("#items_table").on('click', '#' + btn_id, function () {
 
         let url = "";
@@ -23,26 +22,35 @@ function callApi(btn_id) {
                 break;
         }
         if (url !== "") {
-            let data = JSON.stringify({
-                sellItemQuantity: sell_item_qty,
-                id: sell_item_id
-            });
-
-            let xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "http://localhost:8080/grocery/" + url, true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(data);
-
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-
-                    location.reload(function () {
-                        $("#sellItemQuantity").val('');
-                    });
-                }
-            };
+            if (url === "delete") {
+                saveAndUpdate(url, sell_item_id, sell_item_qty);
+            } else {
+                if (validateItemNumberValue(sell_item_qty) === true)
+                    saveAndUpdate(url, sell_item_id, sell_item_qty);
+            }
         }
     });
+}
+
+function saveAndUpdate(url, sell_item_id, sell_item_qty) {
+    let data = JSON.stringify({
+        sellItemQuantity: sell_item_qty,
+        id: sell_item_id
+    });
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "http://localhost:8080/grocery/" + url, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(data);
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            location.reload(function () {
+                $("#sellItemQuantity").val('');
+            });
+        }
+    };
 }
 
 function saveItem() {
@@ -54,32 +62,35 @@ function saveItem() {
     let item_qty = $("#itemQuantitySave").val();
     let item_price = $("#itemPriceSave").val();
 
-    let data = JSON.stringify({
-        id: item_id,
-        itemName: item_name,
-        itemQuantity: item_qty,
-        itemPrice: item_price
-    });
+    if (validateItemNumberValue(item_price) && validateItemNumberValue(item_qty) && validateItemVarchar(item_name)) {
 
-    let xhttp = new XMLHttpRequest();
+        let data = JSON.stringify({
+            id: item_id,
+            itemName: item_name,
+            itemQuantity: item_qty,
+            itemPrice: item_price
+        });
 
-    if (item_id === "") {
-        saveOrUpdateUrl = "save";
-    } else {
-        saveOrUpdateUrl = "update";
-    }
+        let xhttp = new XMLHttpRequest();
 
-    if (saveOrUpdateUrl !== "") {
-        xhttp.open("POST", "http://localhost:8080/grocery/" + saveOrUpdateUrl, true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(data);
+        if (item_id === "") {
+            saveOrUpdateUrl = "save";
+        } else {
+            saveOrUpdateUrl = "update";
+        }
 
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                location.reload();
-                clearTextField();
-            }
-        };
+        if (saveOrUpdateUrl !== "") {
+            xhttp.open("POST", "http://localhost:8080/grocery/" + saveOrUpdateUrl, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(data);
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    location.reload();
+                    clearTextField();
+                }
+            };
+        }
     }
 }
 
