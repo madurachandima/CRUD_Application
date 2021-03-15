@@ -18,14 +18,16 @@ public class ItemController {
     @Autowired
     ItemService service;
 
-    @RequestMapping("/items")
+    //    @RequestMapping("/items")
+    @GetMapping("/items")
     public String showItems(ModelMap modelMap) {
         List<Item> itemList = service.getAllItems();
         modelMap.addAttribute("ItemCollection", new CommonFunction().returnItemList(itemList));
         return "showitems";
     }
 
-    @RequestMapping("/save")
+    //    @RequestMapping("/save")
+    @PostMapping("/save")
     public String insertItem(@RequestBody Item item, ModelMap modelMap) {
         service.saveItem(item);
         List<Item> itemList = service.getAllItems();
@@ -33,20 +35,23 @@ public class ItemController {
         return "redirect:/items";
     }
 
-    @RequestMapping("/sell")
+    //    @RequestMapping("/sell")
+    @PostMapping("/sell")
     public String sellItem(@RequestBody ItemCollection collection) {
         Item item = service.searchItemById(collection.getId()).get();
         service.updateItemQuantity(new CommonFunction().sellItemQuantity(item.getItemQuantity(), collection.getSellItemQuantity()), collection.getId());
         return "redirect:/items";
     }
 
-    @RequestMapping("/delete")
+    //    @RequestMapping("/delete")
+    @PostMapping("/delete")
     public String deleteItem(@RequestBody ItemCollection collection) {
         service.deleteItem(collection.getId());
         return "redirect:/items";
     }
 
-    @RequestMapping("/update")
+    //    @RequestMapping("/update")
+    @PostMapping("/update")
     public String updateItem(@RequestBody Item collection) {
         System.out.println(" To String :" + collection.toString());
         service.updateItem(collection);
